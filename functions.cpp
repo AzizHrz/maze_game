@@ -2,8 +2,11 @@
 #include "functions.hpp" // Include the header file
 #include "cell.hpp"
 
- vector<vector<int>> direction = {{0,-1} , {0,1}, {-1,0} , {1,0} ,
-        {1,1} , {1,-1} , {-1,-1},{-1,1}};
+ //vector<vector<int>> direction = {{0,-1} , {0,1}, {-1,0} , {1,0} ,
+       // {1,1} , {1,-1} , {-1,-1},{-1,1}};
+
+vector<vector<int>> direction = {{1,-1} , {1,0}, {1,1} , {0,-1} ,
+{0,1} , {-1,-1} , {-1,0},{-1,1}};  
     
 
 bool verfier_colonne_ligne(int a,int b, int n , int m  ){

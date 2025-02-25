@@ -202,32 +202,18 @@ void solve() {
 
     vector<pair<int,int>>current_path;
     current_path.push_back({start_X,start_Y});
-    displayMaze(player_row, player_col);
+   // displayMaze(player_row, player_col);
 
     while (true) {
      
-        if(current_path.size()>1){
-        cout << "Do you want to backtrack? Enter 'Y' if yes." << endl;
-        char descision; 
-            cin>>descision;
-            if(descision=='Y'){
-                auto to_delete_step = current_path.back();
-                visited[to_delete_step.first][to_delete_step.second]=false;
-                current_path.pop_back();
-                auto last_step = current_path.back();
-                player_row=last_step.first;
-                player_col=last_step.second;
-                current_path_string = current_path_string.substr(0,current_path_string.size()-1);
-
-            }
-
-        }
+       
         displayMaze(player_row, player_col);
-
         // Keyboard input handling
         cout << "Please enter a number corresponding to the movement direction:" << endl
-            << "1: Left, 2: Right, 3: Up, 4: Down," << endl
-            << "5: Down-Right, 6: Down-Left, 7: Up-Left, 8: Up-Right" << endl;
+            << "7: Up-Left   | 8: Up   | 9: Up-Right" << endl
+            << "4: Left      | 5: hint | 6:Right" << endl
+            << "1: Down-Left | 2: Down | 3: Down-Righ" << endl
+            << "0: Backtarack" << endl;
         int input;
         // ****Capture the pressed key****
         cin >> input;
@@ -238,8 +224,47 @@ void solve() {
         #else
             system("clear"); // Linux/macOS
         #endif  
-          if(input>=1 && input<=8){
+        //================================
+        if (input==0){
+            if(current_path.size()>1){
+                cout << "Do you want to backtrack? Enter 'Y' if yes." << endl;
+                char descision; 
+                    cin>>descision;
+                    if(descision=='Y'){
+                        auto to_delete_step = current_path.back();
+                        visited[to_delete_step.first][to_delete_step.second]=false;
+                        current_path.pop_back();
+                        auto last_step = current_path.back();
+                        player_row=last_step.first;
+                        player_col=last_step.second;
+                        current_path_string = current_path_string.substr(0,current_path_string.size()-1);
+        
+                    }
+        
+                }
+
+        }
+        else if(input==5){//hint
+            cout << "Would you like a hint about the validity of your current path ? Enter 'Y'." << endl;                 
+            char hint_current; 
+            cin>>hint_current;
+            if(toupper(hint_current)=='Y'){
+                    if(trie.contains_prefix(current_path)){
+                            cout << "YES! CONTINUE!." << endl;
+                    }
+                    else if(dfs_check_path(player_row,player_col,maze,{destination_X,destination_Y})){
+                            cout << "Okay not that bad, you still have a chance to complete the game." << endl;
+                    }
+                    else {
+                            cout << "It's time to backtrack." << endl;
+                            
+                    }
+            }
+        }else if((input<=9 && input>=6)||(input>=1 && input<=4)){ 
+          if(input>=6 && input<=9){input--;}
                 input--; 
+
+        //====================
                 // ici on a fait input -- car le tableau est indexé de 0
                 int next_row = player_row+direction[input][0];
                 int next_col = player_col+direction[input][1];
@@ -260,21 +285,7 @@ void solve() {
                                 cout<<endl;
                                 break;
                         }
-                        cout << "Would you like a hint about the validity of your current path ? Enter 'Y'." << endl;                 
-                        char hint_current; 
-                        cin>>hint_current;
-                        if(toupper(hint_current)=='Y'){
-                                if(trie.contains_prefix(current_path)){
-                                        cout << "YES! CONTINUE!." << endl;
-                                }
-                                else if(dfs_check_path(player_row,player_col,maze,{destination_X,destination_Y})){
-                                        cout << "Okay not that bad, you still have a chance to complete the game." << endl;
-                                }
-                                else {
-                                        cout << "It's time to backtrack." << endl;
-                                        
-                                }
-                        }
+                      
                         player_row = next_row ; 
                         player_col = next_col ; 
                         current_path.push_back({player_row,player_col});

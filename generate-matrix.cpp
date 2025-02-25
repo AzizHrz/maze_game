@@ -28,7 +28,7 @@ bool isInsideMaze(int x, int y, int n, int m) {
     return x >= 0 && x < n && y >= 0 && y < m;
 }
 
-vector<vector<char>> generateMazeWallsDFS(int x, int y, vector<vector<char>>& maze) {
+void generateMazeWallsDFS(int x, int y, vector<vector<char>>& maze) {
     maze[x][y] = '.';  // Mark the current cell as a path
     int n = maze.size();          
     int m = maze[0].size(); 
@@ -47,7 +47,7 @@ vector<vector<char>> generateMazeWallsDFS(int x, int y, vector<vector<char>>& ma
         }
     }
 
-    return maze;
+    
 }
 
 
@@ -146,26 +146,27 @@ vector<vector<char>> generateMaze(vector<string> list, int d) {
      srand(time(0));
     
     vector<vector<char>> maze(n, vector<char>(m, '#'));
-    maze = generateMazeWallsDFS(1, 1, maze);
+  //  maze = generateMazeWallsDFS(1, 1, maze);
+    generateMazeWallsDFS(1, 1, maze);
     
     // Print maze 
-    for (const auto& row : maze) {
-        for (char cell : row) {
-            cout << cell << " ";
-        }
-        cout << endl;
-    }
-    cout << endl <<endl;
+    // for (const auto& row : maze) {
+    //     for (char cell : row) {
+    //         cout << cell << " ";
+    //     }
+    //     cout << endl;
+    // }
+    // cout << endl <<endl;
 
     maze = placeWordsDFS(list,maze);
     //Print maze 
-    for (const auto& row : maze) {
-        for (char cell : row) {
-            cout << cell << " ";
-        }
-        cout << endl;
-    }
-     cout << endl << endl;
+    // for (const auto& row : maze) {
+    //     for (char cell : row) {
+    //         cout << cell << " ";
+    //     }
+    //     cout << endl;
+    // }
+    //  cout << endl << endl;
     // filling missing cells with random letters
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
@@ -174,14 +175,14 @@ vector<vector<char>> generateMaze(vector<string> list, int d) {
             }
         }
     }
-    cout << endl <<endl;
+   // cout << endl <<endl;
 
     //Print maze 
-    for (const auto& row : maze) {
-        for (char cell : row) {
-            cout << cell << " ";
-        }
-        cout << endl;
-    }
+    // for (const auto& row : maze) {
+    //     for (char cell : row) {
+    //         cout << cell << " ";
+    //     }
+    //     cout << endl;
+    // }
     return maze;
 }
